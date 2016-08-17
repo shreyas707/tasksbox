@@ -1,0 +1,21 @@
+<h2>Add Announcement</h2>
+<%= form_for @announcement do |f| %>
+
+<% if @announcement.errors.any? %>
+	<h4>These errors prohitibted the form from being saved: </h4>
+	<ul style = "color:red;">
+		<% @announcement.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<label>Title</label><br/>
+<%= f.text_field :title %><br/>
+
+<label>Body</label><br/>
+<%= f.text_area :body %><br/>
+
+<%= f.submit %>
+
+<% end %>

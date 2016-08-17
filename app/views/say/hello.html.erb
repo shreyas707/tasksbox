@@ -1,0 +1,34 @@
+<h1>Hello World.</h1>
+
+2 + 2 =
+
+<%= 2 + 2 %>
+
+<% movies = ["U Turn", "Kabali", "Independence Day", "Sultan"] %>
+
+<ol>
+<li>Apple</li>
+<li>Mango</li>
+<li>Water Melon</li>
+</ol>
+
+<h3>Now Showing</h3>
+<ol>
+<% movies.each do |movie| %>
+<li><%= movie %></li>
+<% end %>
+</ol>
+
+<% signed_in = [true,false].sample %>
+<%if signed_in %>
+<p>Welcome User</p>
+<% else %>
+<p>Login to continue</p>
+<% end %>
+
+<a href="/say/goodbye">Go to goodbye page.</a>
+<br>
+<%= link_to "\nSay Goodbye(ruby)", say_goodbye_path%>
+<%#= link_to "\nSay Goodbye(ruby)", "/say/goodbye"%>
+<br>
+<%= link_to "\nGo to products' page.", say_products_path%>

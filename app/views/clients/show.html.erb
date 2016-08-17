@@ -1,0 +1,48 @@
+<div class="row">
+	<div class="col-md-7">
+		<div class="page-header">
+			<h2><%= @client.name %>
+			<small>
+				<span class="glyphicon glyphicon-briefcase"></span> <%= @client.company %>
+				<span class="glyphicon glyphicon-earphone"></span> <%= @client.mobile %>
+				<span class="glyphicon glyphicon-envelope"></span> <%= @client.email %>
+			</small></h2>
+		</div>
+	</div>
+
+	<div class="col-md-5">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-5">
+	</div>
+</div>
+
+	<% if @client.projects.empty? %>
+		No projects found.
+	<% else %>
+		<h3>Total Projects: <%= @client.projects.size %></h3>
+		<ul>
+			<%@client.projects.each do |project| %>
+				<li><%= link_to project.name, project_path(project.id) %></li>
+			<% end %>
+		</ul>
+	<% end %>
+
+	<h3><%= link_to "Edit", edit_client_path(@client.id) %> | <%= link_to "Delete", client_path(@client.id), data: {method: :delete, confirm: "Are you sure you want to delete?"}  %></h3>
+
+	<% data = []
+		@client.projects.each do |project|
+			data.push([project.name, project.start_date, project.end_date])
+		end
+	%>
+	<br/><br/>
+	<%= data %>
+
+	<%= timeline(data) %>
+	<p>Inner join</p>
+	<h4>Total tasks for this client is:
+	<%= Task.joins(:project).where('projects.client_id = ?', @client.id).size %> </h4>
+	<p>Select Inner</p>
+	<%= Task.where(project_id: @client.project_ids).size %>

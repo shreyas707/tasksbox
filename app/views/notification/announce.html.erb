@@ -1,0 +1,9 @@
+<p>
+	Hi <% @announcement.user.clients do |client| %>
+			<%= client.email %>, 
+		<% end %><br/>
+	<%= @announcement.body %><br/>
+	 
+	regards,<br/>
+	Team Tasksbox<br/>
+</p>

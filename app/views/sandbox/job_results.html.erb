@@ -1,0 +1,53 @@
+<div class="col-md-8">
+	<div class="page-hearder">
+		<h2>Total <%= @job_results["query"] %> jobs<small> in <%= @job_results["location"] %> is <%= @job_results["totalResults"] %> </small></h2>
+	</div>
+
+	<table class="table table-striped" id="myTable">
+		
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Company</th>
+				<th>City</th>
+				<th>Source</th>
+				<th>Snippet</th>
+			</tr>		
+		</thead>
+
+		<tbody>
+			<% @job_results["results"].each do |result| %>
+				<tr>
+					<td><%= link_to result["jobtitle"], result["url"], target: "_blank" %></td>
+					<td><%= result["company"] %></td>
+					<td><%= result["city"] %></td>
+					<td><%= result["source"] %></td>
+					<td><%= raw(result["snippet"]) %></td>
+				</tr>
+			<% end %>
+		</tbody>
+
+	</table>
+</div>
+
+<div class="col-md-4">
+	
+	<div class="page-header">
+		<h3>Search</h3>
+	</div>
+
+	<%= form_tag(sandbox_job_results_path, method: :get) do %>
+		<div class="form-group">
+			<label>Technology: </label><br/>
+			<%= text_field_tag :technology %>
+		</div>
+
+		<div class="form-group">
+			<label>Location: </label><br/>
+			<%= text_field_tag :location %>
+		</div>
+
+		<%= submit_tag "Search", class:"btn btn-primary" %>
+	<% end %>
+
+</div>

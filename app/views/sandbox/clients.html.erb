@@ -1,0 +1,71 @@
+<h1>Total Clients: </h1>
+<% last_client = Client.last %>
+
+<% if last_client.projects.empty? %>
+	<h3>No projects found. All your first project.</h3>
+<% else %>
+	<ul>
+		<b>Total Projects: <%= last_client.projects.size %>
+		<% last_client.projects.each do |project| %>
+			<li><%= project.name %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+<% @clients.each do |client|%>
+	<h3><%= client.details.html_safe %></h3>
+	<ul>
+	<%client.list_projects.each do |project|%>
+	<li><%= project.name %></li>
+	<% end %>
+	</ul>
+<% end %>
+<hr/>
+
+<ol>
+	<% @clients.each do |client| %>
+	<li>name: <%=client.name%>, company: <%=client.company%>, email: <%=client.email%>
+	</li>
+	<% end %>
+</ol>
+
+<table border = "1">
+<thead>
+	<tr>
+		<th>#</th>
+		<th>Name</th>
+		<th>Company</th>
+		<th>Mobile</th>
+		<th>Email</th>
+		<!--<th>Website</th>-->
+	</tr>
+</thead>
+
+<tbody>
+	<% @clients.each_with_index do |client,index|%>
+	<tr>
+	<td> <%= index + 1 %></td>
+	<td> <%= client.name.capitalize %></td>
+	<td> <%= client.company.capitalize %></td>
+	<td> <%= client.mobile %></td>
+	<td> <%= client.email %></td>
+	<td> <%#= client.website %></td>
+	</tr>
+	<% end %>
+</tbody>
+
+</table>
+<br>
+<hr/>
+
+<h3>Client Details</h3>
+<p> Name: <%= @client.name %>
+<br>Email: <%= @client.email %>
+</p>
+
+<h3>Clients by id 1 & 3</h3>
+<ol>
+	<% for client in @clients_by_id %>
+	<li> <%= client.name %></li>
+	<% end %>
+</ol>

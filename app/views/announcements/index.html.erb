@@ -1,0 +1,27 @@
+<h2>Announcements</h2>
+
+<table border="1">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Title</th>
+			<th>Body</th>
+			<th>User ID</th>
+			<th>Show</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% @announcements.each do |announcement,index| %>	
+		<tr>
+			<td><%= index %></td>
+			<td><%= announcement.title %></td>
+			<td><%= announcement.body %></td>
+			<td><%= announcement.user_id %></td>
+			<td><%= link_to "Show", announcement_path(announcement.id) %></td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>
+
+<h2><%= link_to "Add Announcements", new_announcement_path %></h2>

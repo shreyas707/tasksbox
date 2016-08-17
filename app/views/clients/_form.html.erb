@@ -1,0 +1,35 @@
+<%= form_for @client do |f| %>
+	<% if @client.errors.any? %>
+	<div class = "alert alert-danger">
+		<h3>These errors prohibited the form from being saved: </h3>
+		<ul style="color:red;">
+			<%@client.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+
+	<div class="form-group">
+		<label>Name</label><br/>
+		<%= f.text_field :name, class: "form-control" %><br/>
+	</div>
+
+	<div class="form-group">
+		<label>Company</label><br/>
+		<%= f.text_field :company, class: "form-control" %><br/>
+	</div>
+
+	<div class="form-group">
+		<label>Mobile</label><br/>
+		<%= f.text_field :mobile, class: "form-control" %><br/>
+	</div>
+
+	<div class="form-group">
+		<label>Email</label><br/>
+		<%= f.email_field :email, class: "form-control" %><br/>
+	</div>
+
+	<%= f.submit "Submit", class: "btn btn-primary" %> <%#= link_to "back", clients_path %>
+
+<% end %>

@@ -1,0 +1,91 @@
+<div class = "row">
+
+	<div class = "col-md-7">
+		
+		<div class = "page-header">
+			<h2>Listing Clients</h2>
+		</div>
+
+		<%= link_to clients_path(format: "xls"), class: "btn-sm btn-info pull-right" do %>
+			<span class = "glyphicon glyphicon glyphicon-download-alt"></span> Export to Excel
+		<% end %>
+		<br/><br/>
+
+<script>
+$(document).ready(function(){
+	$('#myTable').DataTable();
+});
+</script>
+
+
+		<% if @clients.empty? %>
+			<p>No clients found.</p>
+		<% else %>
+			<div class="table-responsive">
+			<table class = "table table-striped" id="myTable">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Name</th>
+						<th>Company</th>
+						<th>Mobile</th>
+						<th>Email</th>
+						<% if current_user.is_admin? %>
+							<th>User</th>
+						<% end %>
+						<th>Project Count</th>
+						<th>Show</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<% @clients.each_with_index do |client,index|%>
+					<tr>
+					<td> <%= index + 1 %></td>
+					<td> <%= link_to client.name.capitalize, client_path(client.id) %></td>
+					<td> <%= client.company.capitalize %></td>
+					<td> <%= client.mobile %></td>
+					<td> <%= client.email %></td>
+					<% if current_user.is_admin? %>
+						<td> <%= client.user.email %> </td>
+					<% end %>
+					<td> <%= client.projects.size %> </td>
+					<td> 
+						<%= link_to client_path(client.id) do %>
+							<span class = "glyphicon glyphicon-eye-open"></span>
+						<% end %>
+					</td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+			</div>
+		<% end %>
+
+		<% if can? :create, Client.new %>
+			<h2><%= link_to "Add Client", new_client_path, class: "btn btn-default" %></h2>
+		<% end %>
+	</div>
+
+	<div class = "col-md-5">
+		<div class = "page-header">
+			<h2>Some stats</h2>
+		</div>
+
+		<% data = {} 
+			current_user.clients.each do |client|
+				data[client.name] = client.projects.count
+			end
+		%>
+
+		<%= data %>
+
+		<%= pie_chart(data) %>	
+
+		<%= column_chart(data) %>
+
+		<%= bar_chart(data) %>
+
+	</div>
+
+</div>

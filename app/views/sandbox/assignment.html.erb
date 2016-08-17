@@ -1,0 +1,38 @@
+<h2>Question:</h2>
+<p>Given the following hash:<br>
+<br>
+movies = {<br>
+	"U Turn" => ["Veeresh, PVR", 120, 8.4],<br>
+	"Kabali" => ["Inox, Lido", 144, 9.2],<br>
+	"Sultan" => ["Inox, PVR, Lido", 132, 9.8]	}<br>
+<br>
+Show the output on the browser as follows:<br>
+<br>
+1. U Turn<br>
+	- Theaters: Veeresh, PVR<br>
+	- Run Time: 120 mins<br>
+	- Rating: 8.4<br>
+2. Kabali<br>
+	- Theaters: Inox, Lido<br>
+	- Run Time: 144 mins<br>
+	- Rating: 9.2<br>
+3. Sultan<br>
+	- Theaters: Inox, PVR, Lido<br>
+	- Run Time: 132 mins<br>
+	- Rating: 9.8</p><br>
+<br>
+
+<h2>Answer:</h2>
+
+<% movies = {
+	"U Turn" => ["Veeresh, PVR", 120, 8.4],
+	"Kabali" => ["Inox, Lido", 144, 9.2],
+	"Sultan" => ["Inox, PVR, Lido", 132, 9.8]	
+} %>
+
+	<% movies.each do |key, value|%>
+		<b><%= "#{key}" %><br></b>
+			<li>Theaters:<%= "#{value[0]}" %></li><br>
+			<li>Run Time: <%= "#{value[1]}" %></li><br>
+			<li>Ratings: <%= "#{value[2]}" %></li><br>
+	<% end %>

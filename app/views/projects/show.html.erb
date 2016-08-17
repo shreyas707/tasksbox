@@ -1,0 +1,96 @@
+<h3>Project: <%= @project.name %></h3>
+<p>
+	Client: <%= link_to @project.client.name, client_path(@project.client_id) %><br/>
+	Description: <%= @project.description %><br/> 
+	Start Date: <%= @project.start_date %><br/>
+	End Date: <%= @project.end_date %><br/> 
+	Estimated Budget: <%= @project.estimated_budget %><br/>
+	Status: <%= @project.status %><br/>
+</p>
+
+Category: <%= @project.categories.pluck(:name).join(", ") %>
+
+<h3>Total Tasks: <%= @project.tasks.size %></h3>
+<% total_completion = (@project.completed_tasks.size / @project.tasks.size.to_f) * 100 %>
+<% if total_completion == 0 %>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= total_completion.to_f %>%;">
+    <%= total_completion %>%
+  </div>
+</div>
+<% total_incompletion = (@project.incompleted_tasks.size / @project.tasks.size.to_f) * 100 %>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= total_incompletion.to_i %>%;">
+    <%= total_incompletion %>%
+  </div>
+</div>
+<% end %>
+
+<ul>
+  <% for task in @project.tasks %>
+  <li><%= task.title %></li>
+  <% end %>
+</ul>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Add Task
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for @task do |f| %>
+        <%= f.hidden_field :project_id, value: @project.id %>
+        <%= f.text_field :title %><br/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br/><b><%= link_to "Export to Excel", project_path(@project.id, format: "xls") %></b><br/><br/>
+
+<h3>Add Task</h3>
+
+
+<label>Due Date</label><br/>
+<%= f.date_select :due_date, order:[:day, :month, :year] %><br/>
+<%= f.check_box :is_completed %> <label>Is Completed?</label><br/>
+
+<%= f.submit %>
+<% end %>
+
+<br/><h3>Completed Task</h3>
+<% @completed.each do |task| %>
+<%= task.title %> -
+<%= link_to "Mark as incomplete.", tasks_mark_as_incomplete_path(task_id: task.id) %><br/>
+<% end %>
+
+<br/><h3>Incompleted Task</h3>
+<% @incompleted.each do |task| %>
+<%= task.title %> - 
+<%= link_to "Mark as complete.", tasks_mark_as_complete_path(task_id: task.id) %><br/>
+<% end %>
+
+<%#Client.find(@project.client_id).name%>
+
+<h3><%= link_to "Edit", edit_project_path(@project.id) %> | <%= link_to "Delete", project_path(@project.id), data: {method: :delete, confirm: "Are you sure you want to delete?"}  %></h3>
+
+<%	data = {}
+data["incompleted"] = @project.tasks.where('is_completed = ?', false).count
+data["completed"] = @project.tasks.where('is_completed = ?', true) .count
+%>
+
+<%= data %>
+
+<%= pie_chart(data) %>

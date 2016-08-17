@@ -1,0 +1,22 @@
+<h3>Completed Tasks: <%= @completed_tasks.size %></h3>
+<ul>
+	<% @completed_tasks.each do |task|%>
+		<li><%= task.title %></li>
+	<% end %>
+</ul>
+
+
+<h3>Incomplete Tasks: <%= @incompleted_tasks.size %></h3>
+<ul>
+	<% @incompleted_tasks.each do |task|%>
+		<li><%= task.title %></li>
+	<% end %>
+</ul>
+
+
+<h3>Overdue Tasks: <%= @overdue_tasks.size %></h3>
+<ul>
+	<% @overdue_tasks.each do |task|%>
+		<li><%= task.title %></li>
+	<% end %>
+</ul>

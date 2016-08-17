@@ -1,0 +1,37 @@
+ <%= i = 0 %>
+<h3>Listing Projects</h3>
+	<table border = "1">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Client Name</th>
+				<th>Project Name</th>
+				<th>Description</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Estimated Budget</th>
+				<th>Tasks</th>
+				<th>Status</th>
+				<th>Show</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr> <%= i = i + 1 %>
+			<td> <%= i %></td>
+			<td> <%= @project.client.name %></td>
+			<td> <%= @project.name %></td>
+			<td> <%= @project.description %></td>
+			<td> <%= @project.start_date %></td>
+			<td> <%= @project.end_date %> </td>
+			<td> <%= @project.estimated_budget %> </td>
+			<td> 
+				 <% for task in @project.tasks %>
+					<li><%= task.title %></li>
+				 <% end %>
+			</td>
+			<td> <%= @project.status %> </td>
+			<td> <%= link_to "Show", project_path(@project.id)%></td>
+			</tr>
+		</tbody>
+	</table>
