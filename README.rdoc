@@ -1,4 +1,4 @@
-TASKSBOX
+<h3>TASKSBOX</h3>
 
 
 Tasksbox is a project management tool built on Ruby on Rails.
